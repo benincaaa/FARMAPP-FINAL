@@ -38,14 +38,18 @@ $rede = $_GET['rede'];
     <h1>Farmácias <?php echo $rede; ?></h1>
 
     <?php
-    $sql = "SELECT * FROM farmacias WHERE rede = '$rede'";
+    $sql = "SELECT * FROM farmacias AS f INNER JOIN enderecos AS e ON f.id = e.farmacia_id WHERE rede = '$rede' ;";
+
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {
         while ($linha = mysqli_fetch_assoc($result)) {
+            echo '<pre>';
+            print_r($linha);
+            echo '</pre>';
             echo "<div class='farmacia'>";
             echo "<h2>" . $linha['nome'] . "</h2>";
-            echo "<p><strong>Endereço:</strong> " . $linha['endereco'] . "</p>";
+            echo "<p><strong>Endereço:</strong> " . $linha['logradouro'] . "</p>";
             echo "<p><strong>Telefone:</strong> " . $linha['telefone'] . "</p>";
             echo "<p><strong>Horário:</strong> " . $linha['horario'] . "</p>";
             echo "<p><strong>Serviços:</strong> " . $linha['servicos'] . "</p>";
